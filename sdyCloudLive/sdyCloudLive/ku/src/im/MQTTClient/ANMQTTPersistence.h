@@ -1,0 +1,57 @@
+//
+//  MQTTPersistence.h
+//  MQTTClient
+//
+//  Created by Christoph Krey on 22.03.15.
+//  Copyright (c) 2015 Christoph Krey. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+#import "ANMQTTMessage.h"
+
+@interface ANMQTTFlow : NSManagedObject
+@property (strong, nonatomic) NSString *clientId;
+@property (strong, nonatomic) NSNumber *incomingFlag;
+@property (strong, nonatomic) NSNumber *retainedFlag;
+@property (strong, nonatomic) NSNumber *commandType;
+@property (strong, nonatomic) NSNumber *qosLevel;
+@property (strong, nonatomic) NSNumber *messageId;
+@property (strong, nonatomic) NSString *topic;
+@property (strong, nonatomic) NSData *data;
+@property (strong, nonatomic) NSDate *deadline;
+@property (strong, nonatomic) NSString *anMessageId;
+@property (strong, nonatomic) NSString *extraPayload;
+
+@end
+
+@interface ANMQTTPersistence : NSObject
+@property (nonatomic) BOOL persistent;
+@property (nonatomic) NSUInteger maxWindowSize;
+@property (nonatomic) NSUInteger maxMessages;
+@property (nonatomic) NSUInteger maxSize;
+
+- (NSUInteger)windowSize:(NSString *)clientId;
+- (ANMQTTFlow *)storeMessageForClientId:(NSString *)clientId
+                          topic:(NSString *)topic
+                           data:(NSData *)data
+                     retainFlag:(BOOL)retainFlag
+                            qos:(ANMQTTQosLevel)qos
+                          msgId:(UInt16)msgId
+                   incomingFlag:(BOOL)incomingFlag
+                    anMessageId:(NSString *)anMessageId;
+
+- (void)deleteFlow:(ANMQTTFlow *)flow;
+- (void)deleteAllFlowsForClientId:(NSString *)clientId;
+- (NSArray *)allFlowsforClientId:(NSString *)clientId
+                    incomingFlag:(BOOL)incomingFlag;
+- (ANMQTTFlow *)flowforClientId:(NSString *)clientId
+                 incomingFlag:(BOOL)incomingFlag
+                    messageId:(UInt16)messageId;
+
+- (ANMQTTFlow *)createFlowforClientId:(NSString *)clientId
+                       incomingFlag:(BOOL)incomingFlag
+                          messageId:(UInt16)messageId;
+- (void)sync;
+
+@end
