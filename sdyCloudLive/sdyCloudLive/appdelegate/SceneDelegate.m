@@ -10,8 +10,8 @@
 #import "LWHLoginViewController.h"
 #import "Header.h"
 #import "BaseTabbarController.h"
-#import "LWHTestLoginViewController.h"
 #import "BaseNaviController.h"
+
 @interface SceneDelegate ()
 
 @end
@@ -27,17 +27,14 @@
         return;
     }
     self.window = [[UIWindow alloc]initWithWindowScene:sceneWindow];
-//    if ([StorageManager objForKey:k_User_ids]) {
-//        BaseTabbarController *shuFu = [[BaseTabbarController alloc]init];
-//        self.window.rootViewController = shuFu;
-//    }else{
-//        LWHTestLoginViewController *login = [[LWHTestLoginViewController alloc]init];
-//        UINavigationController *navigaVC = [[UINavigationController alloc]initWithRootViewController:login];
-//        self.window.rootViewController = navigaVC;
-//    }
-    LWHTestLoginViewController *login = [[LWHTestLoginViewController alloc]init];
-    BaseNaviController *navigaVC = [[BaseNaviController alloc]initWithRootViewController:login];
-    self.window.rootViewController = navigaVC;
+    if ([StorageManager objForKey:k_User_ids]) {
+        BaseTabbarController *shuFu = [[BaseTabbarController alloc]init];
+        self.window.rootViewController = shuFu;
+    }else{
+        LWHLoginViewController *login = [[LWHLoginViewController alloc]init];
+        UINavigationController *navigaVC = [[UINavigationController alloc]initWithRootViewController:login];
+        self.window.rootViewController = navigaVC;
+    }
     [self.window makeKeyAndVisible];
 }
 

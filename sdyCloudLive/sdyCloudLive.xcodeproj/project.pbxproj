@@ -2314,7 +2314,7 @@
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/apple/Desktop/GongSiXiangMu/sdyCloudLive/sdyCloudLive/LWHPrefixHeader.pch;
+				GCC_PREFIX_HEADER = /Users/apple/Desktop/sdyCloudLive/sdyCloudLive/sdyCloudLive/LWHPrefixHeader.pch;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/sdyCloudLive/ku/libs/webrtc/libanLive-i386/**",
 					"$(PROJECT_DIR)/sdyCloudLive/ku/libs/webrtc/libanLive-arm64/**",
@@ -2367,7 +2367,7 @@
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = /Users/apple/Desktop/GongSiXiangMu/sdyCloudLive/sdyCloudLive/LWHPrefixHeader.pch;
+				GCC_PREFIX_HEADER = /Users/apple/Desktop/sdyCloudLive/sdyCloudLive/sdyCloudLive/LWHPrefixHeader.pch;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/sdyCloudLive/ku/libs/webrtc/libanLive-i386/**",
 					"$(PROJECT_DIR)/sdyCloudLive/ku/libs/webrtc/libanLive-arm64/**",

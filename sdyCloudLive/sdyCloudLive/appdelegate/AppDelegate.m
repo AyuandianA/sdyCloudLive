@@ -19,18 +19,18 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //ArrownockConstants
    //实例化window
-//    self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-//
-//    if ([StorageManager objForKey:k_User_ids]) {
-//        BaseTabbarController *shuFu = [[BaseTabbarController alloc]init];
-//        self.window.rootViewController = shuFu;
-//    }else{
-//        LWHLoginViewController *login = [[LWHLoginViewController alloc]init];
-//        UINavigationController *navigaVC = [[UINavigationController alloc]initWithRootViewController:login];
-//        self.window.rootViewController = navigaVC;
-//    }
-//    
-//    [self.window makeKeyAndVisible];
+    self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+
+    if ([StorageManager objForKey:k_User_ids]) {
+        BaseTabbarController *shuFu = [[BaseTabbarController alloc]init];
+        self.window.rootViewController = shuFu;
+    }else{
+        LWHLoginViewController *login = [[LWHLoginViewController alloc]init];
+        UINavigationController *navigaVC = [[UINavigationController alloc]initWithRootViewController:login];
+        self.window.rootViewController = navigaVC;
+    }
+    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
