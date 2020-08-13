@@ -19,7 +19,7 @@
 -(void)changeDataWithModel:(id)model andSection:(NSIndexPath *)section
 {
     self.section = section;
-    self.textLabel.text = @"6";
+    self.textLabel.text = model;
 }
 
 @end

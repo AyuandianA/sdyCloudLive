@@ -60,8 +60,8 @@
     [meItem setTitleTextAttributes:@{NSForegroundColorAttributeName:MainTopColor} forState:UIControlStateSelected];
     meViewVC.cancelGesture = NO;
     
-//    self.viewControllers = @[navCtrl,friendsCtrl,meCtrl];
-    self.viewControllers = @[friendsCtrl,meCtrl];
+    self.viewControllers = @[navCtrl,friendsCtrl,meCtrl];
+//    self.viewControllers = @[friendsCtrl,meCtrl];
     
 }
 

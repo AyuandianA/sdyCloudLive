@@ -24,13 +24,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.user_id = [StorageManager objForKey:k_User_ids];
-    [self creatTableView];
-    [self updateChatList];
     [self creatRightButtonItem];
+    [self.view addSubview:self.tableView];
+    [self updateChatList];
 }
 -(void)updateChatList
 {
-    
     AnSocial *ansocial = [LWHAnIMTool shareAnIM].ansocial;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setObject:[StorageManager objForKey:k_User_ids] forKey:@"user_id"];
@@ -39,14 +38,15 @@
 //    NSString *path = [NSString stringWithFormat:@"http://%@/%@/%@", k_API_hosttt,k_API_versionnn,@"friends/list.json"];
     [ansocial sendRequest:@"friends/list.json" method:AnSocialMethodGET params:params success:^
      (NSDictionary *response) {
-        for (id key in response)
-        {
-            NSLog(@"key: %@ ,value: %@",key,[response objectForKey:key]);
-        }
         
+        
+        for (id key in response[@"response"][@"friends"])
+        {
+            NSLog(@"%@\n\n",key);
+            [self.tableView.PublicSourceArray addObject:key];
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            self.tableView.PublicSourceArray = [response[@"response"][@"friends"] mutableCopy];
             [self.tableView reloadData];
         });
      } failure:^(NSDictionary *response) {
@@ -77,20 +77,21 @@
     [self.navigationController pushViewController:askfriend animated:YES];
     
 }
--(void)creatTableView
+-(LWHPublicTableView *)tableView
 {
-    self.tableView = [LWHPublicTableView creatPublicTableViewWithFrame:CGRectMake(0, TopHeight, KScreenWidth, KScreenHeight - SafeAreaH - TopHeight)];
-    self.tableView.cellName = @"LWHChatListTableViewCell";
-    Weak_LiveSelf;
-    self.tableView.tapSectionAndModel = ^(NSIndexPath *section, id model) {
-        NSDictionary *dic = model;
-        
-        LWHChatDetaliViewController *detaliVC = [[LWHChatDetaliViewController alloc]init];
-        detaliVC.ID = dic[@"id"];
-        detaliVC.cliented = dic[@"clientId"];
-        [weakSelf.navigationController pushViewController:detaliVC animated:YES];
-    };
-    [self.view addSubview:self.tableView];
+    if (!_tableView) {
+        Weak_LiveSelf;
+        _tableView = [LWHPublicTableView creatPublicTableViewWithFrame:CGRectMake(0, TopHeight, KScreenWidth, KScreenHeight - SafeAreaH - TopHeight)];
+        _tableView.cellName = @"LWHFriendsListTableViewCell";
+        _tableView.tapSectionAndModel = ^(NSIndexPath *section, id model) {
+            NSDictionary *dic = weakSelf.tableView.PublicSourceArray[section.row];
+            NSLog(@"%@\n\n",dic);
+            LWHChatDetaliViewController *detaliVC = [[LWHChatDetaliViewController alloc]init];
+            detaliVC.ID = dic[@"id"];
+            [weakSelf.navigationController pushViewController:detaliVC animated:YES];
+        };
+    }
+    return _tableView;
 }
 -(void)rightAction
 {

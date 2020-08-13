@@ -77,10 +77,10 @@ isYes = YES; \
 #define k_User_ids @"User_ids"
 #define k_User_Name @"User_name"
 #define k_ClientId @"clientIdd"
-#define k_AppKey  @"VVnlqHULywPFn9h5WQYCYm4Pcu88XT5C"
-#define k_AppServer @"BWQxxDAQzkNdGe7UPOw1IXAzXAU9CRRm"
+#define k_AppKey  @"vfe9DhZRj81csb2G9aEVXMLLBmWPu4i0"
+#define k_AppServer @"0b0qIR00F3016K9RQeC0Mh2o6zy3vKjg"
 #define Weak_LiveSelf __weak typeof(self) weakSelf = self
-#define k_API_hosttt   @"10.10.10.93:3000"
+#define k_API_hosttt   @"10.10.10.101:3000"
 #define k_API_versionnn @"v1"
 #define User_User_Id    @"1"
 #endif /*   */

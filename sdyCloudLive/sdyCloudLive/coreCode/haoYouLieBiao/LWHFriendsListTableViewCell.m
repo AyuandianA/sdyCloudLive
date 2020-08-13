@@ -20,7 +20,7 @@
 -(void)changeDataWithModel:(id)model andSection:(NSIndexPath *)section
 {
     [super changeDataWithModel:model andSection:section];
-    self.textLabel.text = model;
+    self.textLabel.text = model[@"username"];
 }
 
 @end

@@ -22,7 +22,7 @@
 @property(nonatomic,strong) UITextField *textfields;
 @property (nonatomic, assign) CGRect keyboardFrame;
 @property (nonatomic,strong)UIButton *searchButton;
-
+@property(nonatomic,copy) NSString*cliented;
 
 @end
 
@@ -32,6 +32,7 @@
     self = [super init];
     if (self) {
         self.type = @"";
+        self.cliented = @"";
     }
     return self;
 }
@@ -42,6 +43,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    Weak_LiveSelf;
+    if (![self.ID isEmptyString]) {
+        [[LWHAnIMTool shareAnIM].anIM getClientId:self.ID success:^(NSString *clientId) {
+//            NSLog(@"clientId  == %@",clientId);
+            weakSelf.cliented = clientId;
+            [weakSelf huoQuOfflineMessages];
+        } failure:^(ArrownockException *exception) {
+            NSLog(@"%@",exception.message);
+        }];
+    }
+//    self.cliented = [];
     [self creatTableView];
     
     /**
@@ -56,8 +68,8 @@
 -(void)huoQuOfflineMessages
 {
     NSMutableArray *muArray = @[].mutableCopy;
-    NSSet *clientIdss = [NSSet setWithArray:@[[LWHAnIMTool shareAnIM].anIM.getCurrentClientId,self.cliented]];
-    [[LWHAnIMTool shareAnIM].anIM getOfflineHistory:clientIdss clientId:[LWHAnIMTool shareAnIM].anIM.getCurrentClientId limit:20 success:^(NSArray *messages, int count) {
+    NSSet *clientIdss = [NSSet setWithArray:@[[StorageManager objForKey:k_ClientId],self.cliented]];
+    [[LWHAnIMTool shareAnIM].anIM getOfflineHistory:clientIdss clientId:[StorageManager objForKey:k_ClientId] limit:20 success:^(NSArray *messages, int count) {
 
         if (messages.count != 0) {
             for (AnIMMessage *messagea in messages) {
@@ -65,7 +77,7 @@
             }
         }
         if (count != 0) {
-            [[LWHAnIMTool shareAnIM].anIM getOfflineHistory:clientIdss clientId:[LWHAnIMTool shareAnIM].anIM.getCurrentClientId limit:count success:^(NSArray *messages, int count) {
+            [[LWHAnIMTool shareAnIM].anIM getOfflineHistory:clientIdss clientId:[StorageManager objForKey:k_ClientId] limit:count success:^(NSArray *messages, int count) {
                 
                 for (AnIMMessage *message in messages) {
                     [muArray insertObject:message atIndex:0];
@@ -149,10 +161,10 @@
 -(void)updataTabelView:(BOOL)isScrToBottom
 {
     NSMutableArray *muArray = @[].mutableCopy;
-    NSSet *clientIdss = [NSSet setWithArray:@[[LWHAnIMTool shareAnIM].anIM.getCurrentClientId,self.cliented]];
+    NSSet *clientIdss = [NSSet setWithArray:@[[StorageManager objForKey:k_ClientId],self.cliented]];
     AnIMMessage *messagess = (AnIMMessage *)self.tableView.PublicSourceArray.firstObject;
     NSNumber *timestamp =messagess.timestamp;
-    [[LWHAnIMTool shareAnIM].anIM getHistory:clientIdss clientId:[LWHAnIMTool shareAnIM].anIM.getCurrentClientId limit:20 timestamp:timestamp success:^(NSArray *messages) {
+    [[LWHAnIMTool shareAnIM].anIM getHistory:clientIdss clientId:[StorageManager objForKey:k_ClientId] limit:20 timestamp:timestamp success:^(NSArray *messages) {
         [self.tableView.mj_header endRefreshing];
         for (AnIMMessage *message in messages) {
             [muArray insertObject:message atIndex:0];

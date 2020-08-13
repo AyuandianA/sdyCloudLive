@@ -4,12 +4,12 @@ NSString * const IM_TOKEN_PREFIX = @"AIM";
 NSString * const ARROWNOCK_SERVER_CERT = @"arrownock_server_cert";
 NSString * const ARROWNOCK_CLIENT_P12 = @"arrownock_client_p12";
 
-NSString * const ARROWNOCK_API_HOST = @"10.10.10.93:3000";
+NSString * const ARROWNOCK_API_HOST = @"10.10.10.101:3000";
 NSString * const ARROWNOCK_API_VERSION = @"v1";
-NSString * const ARROWNOCK_API_SECRET = @"BWQxxDAQzkNdGe7UPOw1IXAzXAU9CRRm";
-NSString * const ARROWNOCK_IM_DISPATCH_HOST = @"10.10.10.93:1343";
+NSString * const ARROWNOCK_API_SECRET = @"z2V1fkA2whofHBLX5qgVDyTt3bCoZEYc";
+NSString * const ARROWNOCK_IM_DISPATCH_HOST = @"10.10.10.101:1343";
 NSString * const ARROWNOCK_IM_DISPATCH_VERSION = @"v1";
-NSString * const ARROWNOCK_SOCIAL_HOST = @"10.10.10.93:3005";
+NSString * const ARROWNOCK_SOCIAL_HOST = @"10.10.10.101:3005";
 NSString * const ARROWNOCK_SOCIAL_VERSION = @"v2";
 NSString * const ARROWNOCK_GS_HOST = @"arrownock_gs_host";
 

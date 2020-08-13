@@ -20,7 +20,6 @@
 @property(nonatomic,strong) NSString* clientId;
 @property(nonatomic,strong) LWHPublicTableView *tableView;
 
-
 @end
 
 @implementation LWHChatListViewController
@@ -28,9 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self creatTableView];
-    [self connectImServer];
+    [self.view addSubview:self.tableView];
     
+    [self connectImServer];
+    [self didUpdateStatus];
 }
 //连接im服务器
 -(void)connectImServer
@@ -38,21 +38,25 @@
     [[LWHAnIMTool shareAnIM]connectAnIM];
     [LWHAnIMTool shareAnIM].delegate = self;
 }
+
+-(LWHPublicTableView *)tableView
+{
+    if (!_tableView) {
+        Weak_LiveSelf;
+        _tableView = [LWHPublicTableView creatPublicTableViewWithFrame:CGRectMake(0, TopHeight, KScreenWidth, KScreenHeight - SafeAreaH - TopHeight)];
+        _tableView.cellName = @"LWHChatListTableViewCell";
+        _tableView.tapSectionAndModel = ^(NSIndexPath *section, id model) {
+            LWHChatDetaliViewController *detaliVC = [[LWHChatDetaliViewController alloc]init];
+            
+            [weakSelf.navigationController pushViewController:detaliVC animated:YES];
+        };
+    }
+    return _tableView;
+}
+//
 -(void)didUpdateStatus
 {
     [self updateChatList];
-}
--(void)creatTableView
-{
-    self.tableView = [LWHPublicTableView creatPublicTableViewWithFrame:CGRectMake(0, TopHeight, KScreenWidth, KScreenHeight - SafeAreaH - TopHeight)];
-    self.tableView.cellName = @"LWHChatListTableViewCell";
-    Weak_LiveSelf;
-    self.tableView.tapSectionAndModel = ^(NSIndexPath *section, id model) {
-        LWHChatDetaliViewController *detaliVC = [[LWHChatDetaliViewController alloc]init];
-        
-        [weakSelf.navigationController pushViewController:detaliVC animated:YES];
-    };
-    [self.view addSubview:self.tableView];
 }
 -(void)updateChatList
 {
@@ -80,7 +84,9 @@
      }];
 }
 
-
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
 
 
 //#pragma 视频
@@ -137,9 +143,7 @@
 //- (void) onError:(NSString*)partyId exception:(ArrownockException*)exception{
 //    NSLog(@"视频错误信息：%@",exception);
 //}
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [self.view endEditing:YES];
-}
+
 
 
 @end
